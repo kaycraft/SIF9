@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smansa Islamic Festival 9</title>
     <style>
-        /* --- Reset dan Gaya Dasar --- */
+        /* --- 1. Reset dan Gaya Dasar --- */
         body, html {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -15,51 +15,59 @@
             color: #333;
         }
 
-        /* --- Gaya Navigasi --- */
+        /* --- 2. Gaya Navigasi Responsif --- */
         .navbar {
-            background-color: #5b375d; /* Cokelat tua */
-            padding: 10px 0;
+            background-color: #48375d; /* Cokelat tua */
+            padding: 10px;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex; /* Menggunakan Flexbox untuk tombol */
+            justify-content: center;
+            flex-wrap: wrap; /* Tombol akan pindah baris di HP jika terlalu banyak */
         }
 
         .nav-button {
             background-color: transparent;
             color: white;
-            padding: 10px 20px;
-            margin: 0 5px;
+            padding: 8px 15px;
+            margin: 5px; /* Margin kecil untuk tampilan HP */
             border: 2px solid transparent;
-            border-radius: 5px;
+            border-radius: 20px; /* Bentuk kapsul yang lebih modern */
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px; /* Font lebih kecil di HP */
             font-weight: bold;
             transition: all 0.3s;
         }
 
         .nav-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.15);
         }
 
         .nav-button.active {
             background-color: white;
-            color: #57375d;
+            color: #5D4037;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
 
-        /* --- Gaya Konten Utama --- */
+        /* --- 3. Gaya Konten Utama --- */
         .content-wrapper {
-            height: calc(100vh - 65px); /* Tinggi konten, dikurangi tinggi navbar */
+            height: calc(100vh - 65px); /* Tinggi konten, disesuaikan dengan navbar */
             overflow: hidden;
         }
 
         .content {
             width: 100%;
             height: 100%;
-            display: none; /* Semua konten tersembunyi secara default */
+            display: none; 
             padding: 0;
             overflow-y: auto;
         }
 
         /* Konten PDF */
+        #pdf-content {
+            display: block; /* Default ke PDF */
+        }
+
         #pdf-content iframe {
             width: 100%;
             height: 100%;
@@ -76,7 +84,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
+            gap: 15px; /* Spasi antar kartu */
             margin-top: 20px;
         }
 
@@ -85,23 +93,58 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            width: 300px;
-            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%; /* Default 100% lebar di HP */
+            max-width: 350px; /* Batas lebar kartu */
         }
 
         .image-card img {
             width: 100%;
             height: auto;
             display: block;
-            border-radius: 6px;
+            min-height: 150px; /* Agar placeholder terlihat */
+            object-fit: cover;
         }
 
         .image-card p {
-            margin: 10px 0 0;
+            padding: 10px;
+            margin: 0;
             font-size: 14px;
-            color: #4f375d;
+            color: #5D4037;
             font-weight: bold;
+            background-color: #f9f9f9;
+        }
+        
+        /* Judul Konten */
+        .content h2 {
+            color: #5D4037;
+            border-bottom: 2px solid #5D4037;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 25px;
+        }
+
+        /* --- 4. Media Query untuk Layar Lebar (Tablet ke atas) --- */
+        @media (min-width: 768px) {
+            .navbar {
+                padding: 15px 0;
+            }
+            
+            .nav-button {
+                font-size: 16px; 
+                padding: 10px 20px;
+                margin: 0 10px; /* Margin lebih besar di desktop */
+            }
+
+            .gallery-grid {
+                /* Di desktop, 3 kartu per baris */
+                gap: 30px; 
+            }
+            
+            .image-card {
+                 /* Lebar di desktop, agar bisa muat 3-4 kartu */
+                width: calc(33.333% - 20px); 
+            }
         }
     </style>
 </head>
@@ -112,7 +155,7 @@
             LIHAT PROPOSAL (PDF)
         </button>
         <button class="nav-button" onclick="showContent('gallery-content', this)">
-            KEGIATAN SIF (Galeri Foto)
+            SPONSORSHIP (Galeri Foto)
         </button>
     </div>
 
@@ -120,7 +163,7 @@
         
         <div id="pdf-content" class="content" style="display: block;">
             <iframe
-                src="mabar kuy 2.pdf"
+                src="proposal sif 9.pdf"
                 title="Proposal Smansa Islamic Festival 9"
                 allowfullscreen
             >
@@ -129,10 +172,10 @@
         </div>
 
         <div id="gallery-content" class="content">
-            <h2>Dokumentasi Kegiatan SIF</h2>
-            <p>Silakan ganti placeholder `src` di bawah ini dengan jalur *file* foto Anda.</p>
+            <h2>Dokumentasi SIF Tahun Lalu</h2>
             
             <div class="gallery-grid">
+                
                 <div class="image-card">
                     <img src="novaskin-wallpaper-rollercoaster2.jpg" alt="Contoh Branding Sponsor">
                     <p>Lomba-lomba</p>
@@ -145,7 +188,7 @@
 
                 <div class="image-card">
                     <img src="novaskin-wallpaper-zombie.jpg" alt="Stand Promosi">
-                    <p>Tabligh Akbar dan Bazar</p>
+                    <p>Tabligh Akbar dan Bazaar</p>
                 </div>
                 
                 </div>
@@ -154,21 +197,17 @@
     </div>
 
     <script>
-        // Fungsi untuk mengontrol perpindahan tampilan
         function showContent(contentId, buttonElement) {
-            // 1. Sembunyikan semua konten
             const contents = document.querySelectorAll('.content');
             contents.forEach(content => {
                 content.style.display = 'none';
             });
 
-            // 2. Tampilkan konten yang dipilih
             const selectedContent = document.getElementById(contentId);
             if (selectedContent) {
                 selectedContent.style.display = 'block';
             }
 
-            // 3. Atur status 'active' pada tombol
             const buttons = document.querySelectorAll('.nav-button');
             buttons.forEach(button => {
                 button.classList.remove('active');
