@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smansa Islamic Festival 9</title>
+    <style>
+        /* --- Reset dan Gaya Dasar --- */
+        body, html {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        /* --- Gaya Navigasi --- */
+        .navbar {
+            background-color: #5b375d; /* Cokelat tua */
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background-color: transparent;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-button.active {
+            background-color: white;
+            color: #57375d;
+        }
+
+        /* --- Gaya Konten Utama --- */
+        .content-wrapper {
+            height: calc(100vh - 65px); /* Tinggi konten, dikurangi tinggi navbar */
+            overflow: hidden;
+        }
+
+        .content {
+            width: 100%;
+            height: 100%;
+            display: none; /* Semua konten tersembunyi secara default */
+            padding: 0;
+            overflow-y: auto;
+        }
+
+        /* Konten PDF */
+        #pdf-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Konten Galeri */
+        #gallery-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .gallery-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .image-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            width: 300px;
+            padding: 10px;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+        }
+
+        .image-card p {
+            margin: 10px 0 0;
+            font-size: 14px;
+            color: #4f375d;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <button class="nav-button active" onclick="showContent('pdf-content', this)">
+            LIHAT PROPOSAL (PDF)
+        </button>
+        <button class="nav-button" onclick="showContent('gallery-content', this)">
+            KEGIATAN SIF (Galeri Foto)
+        </button>
+    </div>
+
+    <div class="content-wrapper">
+        
+        <div id="pdf-content" class="content" style="display: block;">
+            <iframe
+                src="mabar kuy 2.pdf"
+                title="Proposal Smansa Islamic Festival 9"
+                allowfullscreen
+            >
+                <p>Browser Anda tidak mendukung pratinjau PDF. Anda dapat <a href="mabar kuy 2.pdf" target="_blank">klik di sini untuk melihat/mengunduh Proposal SIF 9</a>.</p>
+            </iframe>
+        </div>
+
+        <div id="gallery-content" class="content">
+            <h2>Dokumentasi Kegiatan SIF</h2>
+            <p>Silakan ganti placeholder `src` di bawah ini dengan jalur *file* foto Anda.</p>
+            
+            <div class="gallery-grid">
+                <div class="image-card">
+                    <img src="novaskin-wallpaper-rollercoaster2.jpg" alt="Contoh Branding Sponsor">
+                    <p>Lomba-lomba</p>
+                </div>
+
+                <div class="image-card">
+                    <img src="novaskin-wallpaper-templefriends.jpg" alt="Dokumentasi Lomba">
+                    <p>Donor Darah</p>
+                </div>
+
+                <div class="image-card">
+                    <img src="novaskin-wallpaper-zombie.jpg" alt="Stand Promosi">
+                    <p>Tabligh Akbar dan Bazar</p>
+                </div>
+                
+                </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // Fungsi untuk mengontrol perpindahan tampilan
+        function showContent(contentId, buttonElement) {
+            // 1. Sembunyikan semua konten
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(content => {
+                content.style.display = 'none';
+            });
+
+            // 2. Tampilkan konten yang dipilih
+            const selectedContent = document.getElementById(contentId);
+            if (selectedContent) {
+                selectedContent.style.display = 'block';
+            }
+
+            // 3. Atur status 'active' pada tombol
+            const buttons = document.querySelectorAll('.nav-button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            buttonElement.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
