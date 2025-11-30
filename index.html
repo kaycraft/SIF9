@@ -16,25 +16,41 @@
         }
 
         /* --- 2. Gaya Navigasi Responsif --- */
-        .navbar {
+        .navbar-container {
             background-color: #48375d; /* Cokelat tua */
-            padding: 10px;
-            text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            display: flex; /* Menggunakan Flexbox untuk tombol */
+            padding: 10px 0;
+        }
+
+        .navbar {
+            text-align: center;
+            display: flex; /* Menggunakan Flexbox untuk tombol utama */
             justify-content: center;
-            flex-wrap: wrap; /* Tombol akan pindah baris di HP jika terlalu banyak */
+            flex-wrap: wrap; 
+        }
+
+        /* Gaya Sub-Navbar (PDF 1 & PDF 2) */
+        .sub-navbar {
+            display: none; /* Sembunyikan secara default */
+            justify-content: center;
+            padding: 5px 0 0 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 10px;
+        }
+
+        .sub-navbar.show {
+            display: flex;
         }
 
         .nav-button {
             background-color: transparent;
             color: white;
             padding: 8px 15px;
-            margin: 5px; /* Margin kecil untuk tampilan HP */
+            margin: 5px; 
             border: 2px solid transparent;
-            border-radius: 20px; /* Bentuk kapsul yang lebih modern */
+            border-radius: 20px; 
             cursor: pointer;
-            font-size: 14px; /* Font lebih kecil di HP */
+            font-size: 14px; 
             font-weight: bold;
             transition: all 0.3s;
         }
@@ -45,13 +61,37 @@
 
         .nav-button.active {
             background-color: white;
-            color: #5D4037;
+            color: #48375d;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Gaya untuk Sub-Nav Button */
+        .sub-nav-button {
+            background-color: transparent;
+            color: white;
+            padding: 5px 10px;
+            margin: 0 5px; 
+            border: 1px solid white; /* Border putih tipis untuk pembeda */
+            border-radius: 15px; 
+            cursor: pointer;
+            font-size: 12px; 
+            transition: all 0.3s;
+        }
+        
+        .sub-nav-button.active {
+             background-color: #f8f8f8;
+             color: #48375d;
+             border-color: #f8f8f8;
+        }
+        
+        .sub-nav-button:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         /* --- 3. Gaya Konten Utama --- */
         .content-wrapper {
-            height: calc(100vh - 65px); /* Tinggi konten, disesuaikan dengan navbar */
+            /* Menyesuaikan tinggi dengan 100vh dikurangi tinggi navbar-container yang dinamis */
+            height: calc(100vh - 85px); 
             overflow: hidden;
         }
 
@@ -62,19 +102,19 @@
             padding: 0;
             overflow-y: auto;
         }
-
+        
         /* Konten PDF */
-        #pdf-content {
+        #pdf-main-content {
             display: block; /* Default ke PDF */
         }
 
-        #pdf-content iframe {
+        #pdf-main-content iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
 
-        /* Konten Galeri */
+        /* Konten Galeri (tetap sama) */
         #gallery-content {
             padding: 20px;
             text-align: center;
@@ -84,7 +124,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px; /* Spasi antar kartu */
+            gap: 15px; 
             margin-top: 20px;
         }
 
@@ -94,15 +134,15 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            width: 100%; /* Default 100% lebar di HP */
-            max-width: 350px; /* Batas lebar kartu */
+            width: 100%; 
+            max-width: 350px; 
         }
 
         .image-card img {
             width: 100%;
             height: auto;
             display: block;
-            min-height: 150px; /* Agar placeholder terlihat */
+            min-height: 150px; 
             object-fit: cover;
         }
 
@@ -115,7 +155,6 @@
             background-color: #f9f9f9;
         }
         
-        /* Judul Konten */
         .content h2 {
             color: #5D4037;
             border-bottom: 2px solid #5D4037;
@@ -124,50 +163,69 @@
             margin-bottom: 25px;
         }
 
-        /* --- 4. Media Query untuk Layar Lebar (Tablet ke atas) --- */
+        /* --- 4. Media Query untuk Layar Lebar --- */
         @media (min-width: 768px) {
-            .navbar {
+            .navbar-container {
                 padding: 15px 0;
             }
             
             .nav-button {
                 font-size: 16px; 
                 padding: 10px 20px;
-                margin: 0 10px; /* Margin lebih besar di desktop */
+                margin: 0 10px; 
+            }
+            
+            .sub-nav-button {
+                font-size: 14px; 
             }
 
             .gallery-grid {
-                /* Di desktop, 3 kartu per baris */
                 gap: 30px; 
             }
             
             .image-card {
-                 /* Lebar di desktop, agar bisa muat 3-4 kartu */
                 width: calc(33.333% - 20px); 
+            }
+            
+            .content-wrapper {
+                 /* Menyesuaikan tinggi dengan 100vh dikurangi tinggi navbar-container yang dinamis */
+                height: calc(100vh - 95px); 
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="navbar">
-        <button class="nav-button active" onclick="showContent('pdf-content', this)">
-            LIHAT PROPOSAL (PDF)
-        </button>
-        <button class="nav-button" onclick="showContent('gallery-content', this)">
-            (Galeri Foto)
-        </button>
+    <div class="navbar-container">
+        <div class="navbar">
+            <button class="nav-button active" id="pdf-main-button" onclick="showMainContent('pdf-main-content', this, 'proposal sif 9.pdf', 'pdf-1-button')">
+                LIHAT PROPOSAL (PDF)
+            </button>
+            <button class="nav-button" onclick="showMainContent('gallery-content', this)">
+                SPONSORSHIP (Galeri Foto)
+            </button>
+        </div>
+        
+        <div class="sub-navbar" id="pdf-sub-navbar" style="display: flex;">
+            <button class="sub-nav-button active" id="pdf-1-button" onclick="loadPdf('asli 1.pdf', this)">
+                PDF 1 (Proposal Utama)
+            </button>
+            <button class="sub-nav-button" id="pdf-2-button" onclick="loadPdf('asli 2.pdf', this)">
+                PDF 2 (Contoh Lain)
+            </button>
+        </div>
     </div>
 
     <div class="content-wrapper">
         
-        <div id="pdf-content" class="content" style="display: block;">
+        <div id="pdf-main-content" class="content" style="display: block;">
             <iframe
-                src="proposal sif 9.pdf"
+                id="pdf-iframe"
+                src="proposal sif 9.pdf" 
                 title="Proposal Smansa Islamic Festival 9"
                 allowfullscreen
             >
-                <p>Browser Anda tidak mendukung pratinjau PDF. Anda dapat <a href="mabar kuy 2.pdf" target="_blank">klik di sini untuk melihat/mengunduh Proposal SIF 9</a>.</p>
+                <p>Browser Anda tidak mendukung pratinjau PDF. Anda dapat <a id="pdf-link" href="proposal sif 9.pdf" target="_blank">klik di sini untuk melihat/mengunduh Proposal SIF 9</a>.</p>
             </iframe>
         </div>
 
@@ -175,7 +233,6 @@
             <h2>Dokumentasi SIF Tahun Lalu</h2>
             
             <div class="gallery-grid">
-                
                 <div class="image-card">
                     <img src="novaskin-wallpaper-rollercoaster2.jpg" alt="Contoh Branding Sponsor">
                     <p>Lomba-lomba</p>
@@ -190,14 +247,13 @@
                     <img src="novaskin-wallpaper-zombie.jpg" alt="Stand Promosi">
                     <p>Tabligh Akbar dan Bazaar</p>
                 </div>
-                
-                </div>
+            </div>
         </div>
-        
     </div>
 
     <script>
-        function showContent(contentId, buttonElement) {
+        // Fungsi untuk mengganti konten utama (PDF atau Galeri)
+        function showMainContent(contentId, buttonElement, defaultPdfSrc, defaultPdfButtonId) {
             const contents = document.querySelectorAll('.content');
             contents.forEach(content => {
                 content.style.display = 'none';
@@ -208,14 +264,54 @@
                 selectedContent.style.display = 'block';
             }
 
-            const buttons = document.querySelectorAll('.nav-button');
-            buttons.forEach(button => {
+            const mainButtons = document.querySelectorAll('.nav-button');
+            mainButtons.forEach(button => {
                 button.classList.remove('active');
             });
             buttonElement.classList.add('active');
+            
+            const subNavbar = document.getElementById('pdf-sub-navbar');
+            
+            // Tampilkan/Sembunyikan Sub-Navbar
+            if (contentId === 'pdf-main-content') {
+                subNavbar.classList.add('show');
+                // Atur ulang iframe ke PDF default (PDF 1) saat mengaktifkan menu PDF
+                if(defaultPdfSrc) {
+                     loadPdf(defaultPdfSrc, document.getElementById(defaultPdfButtonId));
+                }
+            } else {
+                subNavbar.classList.remove('show');
+            }
         }
+        
+        // Fungsi untuk memuat PDF ke dalam iframe dan menandai sub-tombol yang aktif
+        function loadPdf(pdfSrc, buttonElement) {
+            const iframe = document.getElementById('pdf-iframe');
+            const link = document.getElementById('pdf-link');
+            
+            // Set sumber PDF baru
+            iframe.src = pdfSrc;
+            link.href = pdfSrc;
+            
+            // Hapus status 'active' dari semua sub-tombol PDF
+            const subButtons = document.querySelectorAll('.sub-nav-button');
+            subButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Tambahkan status 'active' ke sub-tombol yang diklik
+            buttonElement.classList.add('active');
+        }
+        
+        // Memastikan tampilan awal yang benar saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            // Aktifkan PDF 1 secara default
+            loadPdf('proposal sif 9.pdf', document.getElementById('pdf-1-button'));
+            // Pastikan PDF Content dan Sub-Navbar terlihat saat dimuat
+            document.getElementById('pdf-main-content').style.display = 'block';
+            document.getElementById('pdf-sub-navbar').classList.add('show');
+        });
     </script>
 
 </body>
 </html>
-
