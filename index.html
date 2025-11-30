@@ -24,14 +24,14 @@
 
         .navbar {
             text-align: center;
-            display: flex; /* Menggunakan Flexbox untuk tombol utama */
+            display: flex; 
             justify-content: center;
             flex-wrap: wrap; 
         }
 
         /* Gaya Sub-Navbar (PDF 1 & PDF 2) */
         .sub-navbar {
-            display: none; /* Sembunyikan secara default */
+            display: none; 
             justify-content: center;
             padding: 5px 0 0 0;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -42,6 +42,7 @@
             display: flex;
         }
 
+        /* Gaya Tombol Utama */
         .nav-button {
             background-color: transparent;
             color: white;
@@ -67,30 +68,34 @@
 
         /* Gaya untuk Sub-Nav Button */
         .sub-nav-button {
-            background-color: transparent;
-            color: white;
+            /* PERUBAHAN UTAMA: DEFAULT KE PUTIH */
+            background-color: white; 
+            color: #48375d; /* Warna teks gelap */
             padding: 5px 10px;
             margin: 0 5px; 
-            border: 1px solid white; /* Border putih tipis untuk pembeda */
+            border: 1px solid #48375d; /* Border disesuaikan agar terlihat */
             border-radius: 15px; 
             cursor: pointer;
             font-size: 12px; 
             transition: all 0.3s;
         }
         
+        /* Sub-Nav Button yang Aktif */
         .sub-nav-button.active {
-             background-color: #f8f8f8;
-             color: #48375d;
-             border-color: #f8f8f8;
+             background-color: white; 
+             color: #48375d; 
+             border-color: #48375d;
+             border-width: 2px; /* Border lebih tebal agar menonjol */
+             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
         }
         
+        /* Hover pada tombol sub-nav yang tidak aktif */
         .sub-nav-button:hover:not(.active) {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: #f0f0f0; /* Sedikit abu-abu saat di-hover */
         }
 
         /* --- 3. Gaya Konten Utama --- */
         .content-wrapper {
-            /* Menyesuaikan tinggi dengan 100vh dikurangi tinggi navbar-container yang dinamis */
             height: calc(100vh - 85px); 
             overflow: hidden;
         }
@@ -103,9 +108,8 @@
             overflow-y: auto;
         }
         
-        /* Konten PDF */
         #pdf-main-content {
-            display: block; /* Default ke PDF */
+            display: block;
         }
 
         #pdf-main-content iframe {
@@ -114,7 +118,6 @@
             border: none;
         }
 
-        /* Konten Galeri (tetap sama) */
         #gallery-content {
             padding: 20px;
             text-align: center;
@@ -188,7 +191,6 @@
             }
             
             .content-wrapper {
-                 /* Menyesuaikan tinggi dengan 100vh dikurangi tinggi navbar-container yang dinamis */
                 height: calc(100vh - 95px); 
             }
         }
@@ -198,7 +200,7 @@
 
     <div class="navbar-container">
         <div class="navbar">
-            <button class="nav-button active" id="pdf-main-button" onclick="showMainContent('pdf-main-content', this, 'proposal sif 9.pdf', 'pdf-1-button')">
+            <button class="nav-button active" id="pdf-main-button" onclick="showMainContent('pdf-main-content', this, 'asli 1.pdf', 'pdf-1-button')">
                 LIHAT PROPOSAL (PDF)
             </button>
             <button class="nav-button" onclick="showMainContent('gallery-content', this)">
@@ -208,10 +210,10 @@
         
         <div class="sub-navbar" id="pdf-sub-navbar" style="display: flex;">
             <button class="sub-nav-button active" id="pdf-1-button" onclick="loadPdf('asli 1.pdf', this)">
-                PDF 1 (Proposal Utama)
+                PDF 1
             </button>
-            <button class="sub-nav-button" id="pdf-2-button" onclick="loadPdf('asli 2.pdf', this)">
-                PDF 2 (Contoh Lain)
+            <button class="sub-nav-button" id="pdf-2-button" onclick="loadPdf('asli.pdf', this)">
+                PDF 2
             </button>
         </div>
     </div>
@@ -221,11 +223,11 @@
         <div id="pdf-main-content" class="content" style="display: block;">
             <iframe
                 id="pdf-iframe"
-                src="proposal sif 9.pdf" 
+                src="asli 1.pdf" 
                 title="Proposal Smansa Islamic Festival 9"
                 allowfullscreen
             >
-                <p>Browser Anda tidak mendukung pratinjau PDF. Anda dapat <a id="pdf-link" href="proposal sif 9.pdf" target="_blank">klik di sini untuk melihat/mengunduh Proposal SIF 9</a>.</p>
+                <p>Browser Anda tidak mendukung pratinjau PDF. Anda dapat <a id="pdf-link" href="asli 1.pdf" target="_blank">klik di sini untuk melihat/mengunduh Proposal SIF 9</a>.</p>
             </iframe>
         </div>
 
@@ -252,7 +254,6 @@
     </div>
 
     <script>
-        // Fungsi untuk mengganti konten utama (PDF atau Galeri)
         function showMainContent(contentId, buttonElement, defaultPdfSrc, defaultPdfButtonId) {
             const contents = document.querySelectorAll('.content');
             contents.forEach(content => {
@@ -272,10 +273,8 @@
             
             const subNavbar = document.getElementById('pdf-sub-navbar');
             
-            // Tampilkan/Sembunyikan Sub-Navbar
             if (contentId === 'pdf-main-content') {
                 subNavbar.classList.add('show');
-                // Atur ulang iframe ke PDF default (PDF 1) saat mengaktifkan menu PDF
                 if(defaultPdfSrc) {
                      loadPdf(defaultPdfSrc, document.getElementById(defaultPdfButtonId));
                 }
@@ -284,30 +283,24 @@
             }
         }
         
-        // Fungsi untuk memuat PDF ke dalam iframe dan menandai sub-tombol yang aktif
         function loadPdf(pdfSrc, buttonElement) {
             const iframe = document.getElementById('pdf-iframe');
             const link = document.getElementById('pdf-link');
             
-            // Set sumber PDF baru
             iframe.src = pdfSrc;
             link.href = pdfSrc;
             
-            // Hapus status 'active' dari semua sub-tombol PDF
             const subButtons = document.querySelectorAll('.sub-nav-button');
             subButtons.forEach(button => {
                 button.classList.remove('active');
             });
 
-            // Tambahkan status 'active' ke sub-tombol yang diklik
             buttonElement.classList.add('active');
         }
         
-        // Memastikan tampilan awal yang benar saat halaman dimuat
         document.addEventListener('DOMContentLoaded', () => {
-            // Aktifkan PDF 1 secara default
-            loadPdf('proposal sif 9.pdf', document.getElementById('pdf-1-button'));
-            // Pastikan PDF Content dan Sub-Navbar terlihat saat dimuat
+            // Pastikan PDF 1 dimuat dan tombolnya aktif saat dimuat
+            loadPdf('asli 1.pdf', document.getElementById('pdf-1-button')); 
             document.getElementById('pdf-main-content').style.display = 'block';
             document.getElementById('pdf-sub-navbar').classList.add('show');
         });
